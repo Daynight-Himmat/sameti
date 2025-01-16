@@ -16,3 +16,15 @@ export const loginFormSchema = yupResolver(
     })
     .required(),
 );
+
+
+export const forgotPassSchema = yupResolver(
+  yup
+    .object({
+      phone: yup
+        .string()
+        .email('Please enter valid email')
+        .required('Email is required'),
+    })
+    .required(),
+);

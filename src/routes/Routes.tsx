@@ -1,17 +1,19 @@
-import React, {useMemo} from 'react';
 import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ROUTES} from '../constants/routeConstant';
-import Login from '../views/login/Login';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {useTheme} from '../hooks';
+import React, {useMemo} from 'react';
+import Login from '../views/login/Login';
+import SignUp from '../views/signUp/SignUp';
+import Splash from '../views/splash/Splash';
 import {Platform, StatusBar} from 'react-native';
+import { RootStackParamList } from '../constants/routeConstant';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import ForgotPassword from '../views/forgot/Forgot';
 
-const Auth = createNativeStackNavigator();
-const App = createNativeStackNavigator();
+const Auth = createNativeStackNavigator<RootStackParamList>();
 
 const globalProps: any = global;
 
@@ -19,28 +21,30 @@ globalProps.currentScreen = '';
 
 const AuthStack = () => {
   return (
-    <Auth.Navigator initialRouteName={ROUTES.login}>
+    <Auth.Navigator initialRouteName={'splash'}>
       <Auth.Screen
-        name={ROUTES.login}
+        name={'splash'}
+        component={Splash}
+        options={{headerShown: false}}
+      />
+      <Auth.Screen
+        name={'login'}
         component={Login}
+        options={{headerShown: false}}
+      />
+      <Auth.Screen
+        name={'forgot'}
+        component={ForgotPassword}
+        options={{headerShown: false}}
+      />
+      <Auth.Screen
+        name={'signUp'}
+        component={SignUp}
         options={{headerShown: false}}
       />
     </Auth.Navigator>
   );
 };
-
-// TODO: FUTURE SCOPRE
-// const AppStack = () => {
-//   return (
-//     <App.Navigator>
-//       <App.Screen
-//         name={'app'}
-//         component={Login}
-//         options={{headerShown: false}}
-//       />
-//     </App.Navigator>
-//   );
-// };
 
 const Routes = () => {
   const navigationRef = useNavigationContainerRef();
@@ -57,8 +61,6 @@ const Routes = () => {
         <StatusBar translucent barStyle={barStyle} />
       ) : null}
       <NavigationContainer ref={navigationRef}>
-        {/* <AppStack /> */}
-
         <AuthStack />
       </NavigationContainer>
     </SafeAreaProvider>

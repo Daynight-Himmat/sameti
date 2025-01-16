@@ -1,82 +1,71 @@
-import React, {ReactNode, useState} from 'react';
 import {
-  TextInput,
   View,
-  Pressable,
+  TextInput,
   StyleProp,
   TextStyle,
   ViewStyle,
-  PressableStateCallbackType,
   TextInputProps,
 } from 'react-native';
-import SvgIcon from '../../assets/svg';
-import {useTheme} from '../../hooks';
+import svg from '../../assets/svg';
 import AppText from '../text/AppText';
-import {useAppTextInputStyle} from './AppTextInputStyle';
+import SvgIcon from '../../assets/svg';
+import SvgButton from '../svgButton/SvgButton';
+import React, { useCallback, useState } from 'react';
+import { useAppTextInputStyle } from './AppTextInputStyle';
+import { TEXTINPUT_ICON_SIZE } from '../../constants/constants';
 
-interface props extends TextInputProps {
-  error?: string | undefined;
+export interface AppTextProps extends TextInputProps {
   label?: string;
+  inputRef?: any;
   required?: boolean;
-  icon?: ReactNode | ((state: PressableStateCallbackType) => ReactNode);
-  onIconPress?: () => void | undefined;
+  error?: string | undefined;
+  style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  style: StyleProp<ViewStyle>;
-  leftIcon?: JSX.Element;
-  type?: 'password' | 'number' | 'email' | 'phone' | 'text' | 'percentage';
-  autoCapitalize?: 'characters' | 'words' | 'sentences' | 'none';
+  labelStyle?: StyleProp<TextStyle>;
   leftIconStyle?: StyleProp<ViewStyle>;
   rightIconStyle?: StyleProp<ViewStyle>;
-  inputRef?: any;
-  floatingLabel?: boolean;
-  floatingLabelStyle?: StyleProp<TextStyle>;
-  prefix?: string;
-  [key: string]: any;
+  icon?: keyof typeof SvgIcon | React.JSX.Element;
+  leftIcon?: keyof typeof SvgIcon | React.JSX.Element;
+  onIconPress?: () => Promise<void> | undefined | void;
+  autoCapitalize?: 'characters' | 'words' | 'sentences' | 'none';
+  type?: 'password' | 'number' | 'email' | 'phone' | 'text' | 'percentage';
 }
 
 const AppTextInput = ({
-  error,
-  style,
-  label,
-  required,
   icon,
-  onIconPress,
-  textStyle,
-  value,
-  onChangeText,
-  placeholder,
-  onBlur,
-  placeholderTextColor,
-  leftIcon,
   type,
-  autoCapitalize = 'none',
+  error,
+  label,
+  style,
+  value,
+  onBlur,
+  onFocus,
+  required,
+  leftIcon,
+  inputRef,
+  textStyle,
+  onPressIn,
+  labelStyle,
+  placeholder,
+  onIconPress,
+  autoCorrect,
+  onChangeText,
   leftIconStyle,
   rightIconStyle,
-  onFocus,
-  inputRef,
-  floatingLabel,
-  floatingLabelStyle = {},
-  onPressIn,
-  prefix,
   textContentType,
-  autoCorrect,
+  placeholderTextColor,
+  autoCapitalize = 'none',
   ...rest
-}: props) => {
-  const styles = useAppTextInputStyle({leftIcon, editable: rest?.editable});
-  const {colors} = useTheme();
-  const [isFocused, setIsFocused] = useState(false);
-
+}: AppTextProps) => {
+  const { styles, colors } = useAppTextInputStyle({
+    leftIcon,
+    type,
+    editable: rest?.editable,
+  });
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(
     type === 'password',
   );
-  const handleOnBlur = () => {
-    if (!value) {
-      setIsFocused(false);
-    }
-  };
-  const onFocusInput = () => {
-    setIsFocused(true);
-  };
+
   const handlePasswordIcon = () => {
     setSecureTextEntry(prev => !prev);
   };
@@ -96,95 +85,74 @@ const AppTextInput = ({
     }
   };
 
+  const SvgPassword = secureTextEntry ? 'eyeOffIcon' : 'eyeIcon';
+
+  const renderIcon = useCallback(
+    (
+      rightIcon?: keyof typeof svg | React.JSX.Element,
+      onPress?: () => void,
+    ) => (
+      <SvgButton
+        icon={rightIcon}
+        onPress={onPress}
+        size={TEXTINPUT_ICON_SIZE}
+        style={[styles.rightIcon, rightIconStyle]}
+        iconColor={colors.gray}
+      />
+    ),
+    [colors, styles, rightIconStyle],
+  );
+
   return (
     <>
-      {label && !floatingLabel ? (
-        <AppText style={styles.label}>
+      {label ? (
+        <AppText style={[styles.label, labelStyle]}>
           {label}
           {required ? (
             <AppText style={[styles.label, styles.required]}>*</AppText>
           ) : null}
         </AppText>
       ) : null}
-      <View
-        style={[
-          styles.container,
-          style,
-          error ? styles.errorWrapper : {},
-          prefix ? styles.prefixContainer : {},
-        ]}>
-        {(label && floatingLabel && value) || isFocused ? (
-          <AppText style={[styles.floatingLabel, floatingLabelStyle]}>
-            {label}
-          </AppText>
-        ) : null}
-        {leftIcon ? (
-          <View style={[styles.leftIcon, leftIconStyle]}>{leftIcon}</View>
-        ) : null}
-        {prefix ? (
-          <AppText style={[styles.prefixTextStyles, textStyle]}>
-            {prefix}
-          </AppText>
-        ) : null}
-        <TextInput
-          onBlur={e => {
-            if (onBlur) {
-              onBlur(e);
-            } else {
-              if (floatingLabel) {
-                handleOnBlur();
+      <View style={styles.margin}>
+        <View
+          style={[styles.container, style, error ? styles.errorWrapper : {}]}>
+          {leftIcon ? (
+            <SvgButton
+              icon={leftIcon}
+              size={TEXTINPUT_ICON_SIZE}
+              iconColor={colors.grayishBlue}
+              style={[styles.leftIcon, leftIconStyle]}
+            />
+          ) : null}
+          <TextInput
+            value={value}
+            ref={inputRef}
+            onBlur={onBlur}
+            onPressIn={onPressIn}
+            allowFontScaling={false}
+            placeholder={placeholder}
+            autoCorrect={autoCorrect}
+            onChangeText={onChangeText}
+            autoCapitalize={autoCapitalize}
+            keyboardType={getKeyboardType()}
+            textContentType={textContentType}
+            secureTextEntry={secureTextEntry}
+            style={[styles.textInputStyles, textStyle]}
+            placeholderTextColor={placeholderTextColor || colors.grayishBlue}
+            onFocus={e => {
+              if (onFocus) {
+                onFocus(e);
               }
-            }
-          }}
-          ref={inputRef}
-          keyboardType={getKeyboardType()}
-          placeholder={
-            floatingLabel
-              ? isFocused
-                ? ''
-                : placeholder || label
-              : placeholder
-          }
-          placeholderTextColor={placeholderTextColor || colors.gray}
-          value={value}
-          onChangeText={onChangeText}
-          secureTextEntry={secureTextEntry}
-          style={[styles.textInputStyles, textStyle]}
-          autoCapitalize={autoCapitalize}
-          onFocus={e => {
-            if (onFocus) {
-              onFocus(e);
-            } else {
-              if (floatingLabel) {
-                onFocusInput();
-              }
-            }
-          }}
-          textContentType={textContentType}
-          autoCorrect={autoCorrect}
-          onPressIn={onPressIn}
-          {...rest}
-        />
-        {type === 'password' ? (
-          <Pressable
-            style={[styles.rightIcon, rightIconStyle]}
-            onPress={handlePasswordIcon}>
-            {!secureTextEntry ? (
-              <SvgIcon.eyeOffIcon fill={colors.primary} />
-            ) : (
-              <SvgIcon.eyeIcon fill={colors.primary} />
-            )}
-          </Pressable>
-        ) : null}
-        {icon && type !== 'password' ? (
-          <Pressable
-            style={[styles.rightIcon, rightIconStyle]}
-            onPress={onIconPress}>
-            {icon}
-          </Pressable>
-        ) : null}
+            }}
+            {...rest}
+          />
+          {type === 'password'
+            ? renderIcon(SvgPassword, handlePasswordIcon)
+            : null}
+          {icon && type !== 'password' ? renderIcon(icon, onIconPress) : null}
+        </View>
+        {error && <AppText style={styles.error}>{error}</AppText>}
       </View>
-      {error && <AppText style={styles.error}>{error}</AppText>}
     </>
   );
 };

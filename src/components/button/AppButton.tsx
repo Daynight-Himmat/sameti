@@ -1,33 +1,74 @@
+import {
+  View,
+  TextStyle,
+  ViewStyle,
+  StyleProp,
+  ColorValue,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import React from 'react';
-import {TouchableOpacity, TextStyle, ViewStyle} from 'react-native';
-import {useAppButtonStyle} from './AppButtonStyle';
+import Svg from '../../assets/svg';
 import AppText from '../text/AppText';
+import { SvgProps } from 'react-native-svg';
+import { useAppButtonStyle } from './AppButtonStyle';
 
-interface props {
-  title: string;
-  backgroundColor?: string | undefined;
+interface Props {
+  size?: number;
+  title?: string;
+  isLoading?: boolean;
   onPress: () => void;
-  style?: ViewStyle;
-  labelStyle?: TextStyle;
+  iconColor?: ColorValue;
+  icon?: keyof typeof Svg;
+  style?: StyleProp<ViewStyle>;
+  labelStyle?: StyleProp<TextStyle>;
+  backgroundColor?: string | undefined;
 }
 
-const AppButton = ({
-  title,
-  onPress,
-  backgroundColor,
-  labelStyle,
-  style,
-}: props) => {
-  const styles = useAppButtonStyle({backgroundColor});
+const AppButton = React.memo(
+  ({
+    icon,
+    size,
+    title,
+    style,
+    onPress,
+    isLoading,
+    iconColor,
+    labelStyle,
+    backgroundColor,
+  }: Props) => {
+    const { styles, colors } = useAppButtonStyle({ backgroundColor });
+    const SvgIcon = typeof icon === 'string' ? Svg[icon] : null;
+    const svgProps: SvgProps = {
+      width: size || 12,
+      height: size || 12,
+      fill: iconColor || colors?.white,
+    };
 
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.7}
-      style={[styles.button, style]}>
-      <AppText style={[styles.label, labelStyle]}>{title}</AppText>
-    </TouchableOpacity>
-  );
-};
+    return (
+      <TouchableOpacity
+        onPress={onPress}
+        activeOpacity={0.7}
+        style={[styles.button, style]}>
+        {isLoading ? (
+          <>
+            <ActivityIndicator color={colors?.white} />
+          </>
+        ) : (
+          <>
+            {SvgIcon && (
+              <View style={styles.iconSpace}>
+                <SvgIcon {...svgProps} />
+              </View>
+            )}
+            <AppText fontFamily={'semiBold'} style={[styles.label, labelStyle]}>
+              {title}
+            </AppText>
+          </>
+        )}
+      </TouchableOpacity>
+    );
+  },
+);
 
 export default AppButton;

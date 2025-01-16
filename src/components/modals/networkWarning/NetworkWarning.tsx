@@ -1,14 +1,14 @@
 import React from 'react';
-import {View} from 'react-native';
-import {NetworkWarningStyle} from './NetworkWarningStyle';
+import { View } from 'react-native';
 import AppText from '../../text/AppText';
-import {useNetInfo} from '@react-native-community/netinfo';
-import {closeNetworkWarning} from '../../../helpers/utils';
 import AppButton from '../../button/AppButton';
+import { NetworkWarningStyle } from './NetworkWarningStyle';
+import { useNetInfo } from '@react-native-community/netinfo';
+import { closeNetworkWarning } from '../../../helpers/utils';
 
 const NetworkWarningModal: React.FC = () => {
   const styles = NetworkWarningStyle();
-  const {isConnected} = useNetInfo();
+  const { isConnected } = useNetInfo();
 
   const tryAgain = () => {
     if (isConnected) {

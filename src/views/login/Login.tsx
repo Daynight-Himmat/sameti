@@ -1,73 +1,82 @@
-import React from 'react';
-import {View} from 'react-native';
+import Svg from '../../assets/svg';
+import useLogin from './hooks/useLogIn';
+import React, { useCallback } from 'react';
+import { useLoginStyle } from './LoginStyle';
+import AppText from '../../components/text/AppText';
 import AppButton from '../../components/button/AppButton';
-import AppTextInput from '../../components/textInput/AppTextInput';
-import {loginFormSchema} from '../../helpers/yupHelper';
-import {Controller, useForm} from 'react-hook-form';
-import {useLoginStyle} from './LoginStyle';
+import { Pressable, View, SafeAreaView } from 'react-native';
+import WelcomeLabel from '../../components/welcomLabel/WelComelabel';
+import { LOG_IN, PLACEHOLDER } from '../../constants/stringConstants';
+import AuthTextButton from '../../components/authTextButton/AuthTextButton';
+import AppTextControlInput from '../../components/textInput/AppTextInputController';
+import KeyboardScrollView from '../../components/keyboardScrollView/KeyboardScrollView';
 
 const Login = () => {
-  const styles = useLoginStyle();
-  const {handleSubmit, control, getValues, reset, setValue, clearErrors} =
-    useForm<any, any>({
-      resolver: loginFormSchema,
-      mode: 'onBlur',
-      defaultValues: {
-        email: '',
-        password: '',
-      },
-    });
+  const { styles } = useLoginStyle();
+  const {
+    control,
+    onBackPress,
+    onLogInPress,
+    onForgotPress,
+    onSignUpPress,
+    handleSubmit,
+  } = useLogin();
 
-  const onLogin = () => {
-    const {email, password} = getValues();
-    if (!email || !password) {
-      return;
-    }
-  };
+  const renderInput = useCallback(
+    (icon: keyof typeof Svg, controllerName: string, placeholder: string) => {
+      return (
+        <AppTextControlInput
+          leftIcon={icon}
+          control={control}
+          placeholder={placeholder}
+          controllerName={controllerName}
+          type={controllerName === 'password' && 'password'}
+          keyboardType={
+            controllerName === 'email' ? 'email-address' : 'default'
+          }
+        />
+      );
+    },
+    [control],
+  );
 
   return (
-    <View style={styles.container}>
-      <Controller
-        control={control}
-        name="email"
-        render={({field: {onChange, value, onBlur}, fieldState: {error}}) => (
-          <AppTextInput
-            style={{paddingVertical: 8}}
-            value={value}
-            placeholder="Enter Email"
-            onChangeText={onChange}
-            onBlur={onBlur}
-            error={error?.message}
-            autoCorrect={false}
-            textContentType="username"
+    <SafeAreaView style={styles.container}>
+      <View style={styles.mainContainer}>
+        <KeyboardScrollView containerStyle={styles.subContainer}>
+          <WelcomeLabel
+            isAppLogo
+            isBackPress={true}
+            label={LOG_IN.label}
+            onPress={onBackPress}
+            message={LOG_IN.message}
+            labelStyle={styles.label}
           />
-        )}
-      />
 
-      <Controller
-        control={control}
-        name="password"
-        render={({field: {onChange, value, onBlur}, fieldState: {error}}) => (
-          <AppTextInput
-            style={{paddingVertical: 8, marginTop: 22}}
-            value={value.trim()}
-            placeholder="Enter Password"
-            type={'password'}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            error={error?.message}
-            autoCorrect={false}
-            textContentType="password"
+          {renderInput('emailIcon', 'email', PLACEHOLDER.email)}
+          {renderInput('lockIcon', 'password', PLACEHOLDER.password)}
+
+          <Pressable
+            hitSlop={10}
+            onPress={onForgotPress}
+            style={styles.forgetPass}>
+            <AppText fontFamily={'medium'} style={styles.forgetPassText}>
+              {LOG_IN.forgotPass}
+            </AppText>
+          </Pressable>
+          <AppButton
+            title="Login"
+            onPress={handleSubmit(onLogInPress)}
+            style={styles.button}
           />
-        )}
-      />
-      <AppButton
-        style={{backgroundColor: 'red', alignSelf: 'center', marginTop: 32}}
-        title="Press Me"
-        onPress={handleSubmit(onLogin)}
-        labelStyle={{}}
-      />
-    </View>
+          <AuthTextButton
+            onPress={onSignUpPress}
+            onPressText={LOG_IN.signUp}
+            message={LOG_IN.createAccount}
+          />
+        </KeyboardScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 export default Login;

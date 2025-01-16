@@ -1,18 +1,27 @@
 import React, {
-  useCallback,
-  useEffect,
-  useImperativeHandle,
   useRef,
   useState,
+  useEffect,
+  useCallback,
+  useImperativeHandle,
 } from 'react';
-import {Animated, Easing, TouchableOpacity, View, Platform} from 'react-native';
-import SVGIcon from '../../assets/svg';
-
-import {ToastTitleInterface, ToastIconInterface} from '../../interfaces/toast';
-import {THEMES} from '../../styles';
-import {createStyles} from './ToasterStyle';
+import {
+  View,
+  Easing,
+  Platform,
+  Animated,
+  TouchableOpacity,
+} from 'react-native';
+import {
+  ToastIconInterface,
+  ToastTitleInterface,
+} from '../../interfaces/toast';
+import { THEMES } from '../../styles';
 import AppText from '../text/AppText';
-import {useKeyboard} from '../../hooks/useKeyboard';
+import SVGIcon from '../../assets/svg';
+import { createStyles } from './ToasterStyle';
+import { useKeyboard } from '../../hooks/useKeyboard';
+
 const toastTitle: ToastTitleInterface = {
   E: 'FAILED',
   S: 'SUCCESS',
@@ -35,7 +44,7 @@ export const Toaster = (props: any, ref: React.Ref<unknown> | undefined) => {
   const translateYRef = useRef(new Animated.Value(120));
   const [toast, setToast] = useState(initialToast);
   const timeout = useRef<any>();
-  const {keyboardHeight, keyboardShown} = useKeyboard();
+  const { keyboardHeight, keyboardShown } = useKeyboard();
   const TOAST_TITLE = toast.title
     ? toast.title
     : toast.type
@@ -52,7 +61,7 @@ export const Toaster = (props: any, ref: React.Ref<unknown> | undefined) => {
 
   const showToaster = useCallback(
     (args: any) => {
-      setToast({...initialToast, visible: true, ...args});
+      setToast({ ...initialToast, visible: true, ...args });
       showToast();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,7 +69,7 @@ export const Toaster = (props: any, ref: React.Ref<unknown> | undefined) => {
   );
 
   const hideToaster = useCallback(() => {
-    setToast({...initialToast, type: toast.type});
+    setToast({ ...initialToast, type: toast.type });
     hideToast();
   }, [toast]);
 
@@ -99,13 +108,13 @@ export const Toaster = (props: any, ref: React.Ref<unknown> | undefined) => {
     <Animated.View
       style={[
         styles.toast,
-        {transform: [{translateY: translateYRef.current}]},
+        { transform: [{ translateY: translateYRef.current }] },
       ]}>
       <TouchableOpacity
         onPress={hideToaster}
         style={[
           styles.content,
-          TOAST_COLOR ? {backgroundColor: TOAST_COLOR} : {},
+          TOAST_COLOR ? { backgroundColor: TOAST_COLOR } : {},
         ]}
         activeOpacity={1}>
         {TOAST_ICON && <TOAST_ICON width={30} height={30} />}

@@ -1,17 +1,17 @@
-import {StyleSheet} from 'react-native';
-import {useMemo} from 'react';
-import {SCREEN_WIDTH} from '../../../styles';
-import {useResponsiveScreen, useTheme} from '../../../hooks';
+import { useMemo } from 'react';
+import { StyleSheet } from 'react-native';
+import { FONTS, SCREEN_WIDTH } from '../../../styles';
+import { useResponsiveScreen, useTheme } from '../../../hooks';
 
 export const NetworkWarningStyle = () => {
-  const {wp} = useResponsiveScreen();
-  const {colors} = useTheme();
+  const { wp } = useResponsiveScreen();
+  const { colors } = useTheme();
   const styles = useMemo(() => {
     return StyleSheet.create({
       modalView: {
         margin: 0,
-        borderRadius: 10,
         padding: 20,
+        borderRadius: 10,
         width: SCREEN_WIDTH - 64,
         backgroundColor: 'white',
       },
@@ -24,9 +24,10 @@ export const NetworkWarningStyle = () => {
       },
       headerText: {
         fontSize: 20,
-        textTransform: 'capitalize',
-        fontWeight: 'bold',
         letterSpacing: 0.5,
+        color: colors.green,
+        fontFamily: FONTS.semiBold,
+        textTransform: 'capitalize',
       },
       bodyBlock: {
         justifyContent: 'center',
@@ -45,16 +46,17 @@ export const NetworkWarningStyle = () => {
         alignItems: 'center',
       },
       button: {
-        borderRadius: 42,
         height: 42,
         width: wp(200),
+        borderRadius: 42,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: colors?.green,
       },
       buttonLabel: {
-        color: colors.white,
-        fontWeight: '500',
         letterSpacing: 0.5,
+        color: colors.white,
+        fontFamily: FONTS.semiBold,
       },
     });
   }, [wp, colors]);

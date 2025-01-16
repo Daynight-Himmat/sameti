@@ -1,34 +1,33 @@
-import { ThemeColors } from '@react-navigation/native';
-import { StyleSheet } from 'react-native';
 import { SPACING } from '../../styles';
+import { StyleSheet } from 'react-native';
 
-export const createStyles = (colors: ThemeColors) =>
+export const createStyles = (colors: any) =>
   StyleSheet.create({
     toast: {
-      position: 'absolute',
       right: 0,
-      width: '80%',
       bottom: 0,
+      width: '80%',
+      position: 'absolute',
     },
     content: {
+      width: '100%',
       alignItems: 'center',
       flexDirection: 'row',
-      width: '100%',
       padding: SPACING.s16,
       backgroundColor: colors.primary,
     },
     toastMessageContainer: {
-      justifyContent: 'flex-start',
-      paddingLeft: SPACING.s18,
       flex: 1,
+      paddingLeft: SPACING.s18,
+      justifyContent: 'flex-start',
     },
     titleText: {
-      color: 'white',
       fontSize: 18,
+      color: 'white',
     },
     messageText: {
-      color: 'white',
-      fontSize: 16,
       flex: 1,
+      fontSize: 16,
+      color: 'white',
     },
   });

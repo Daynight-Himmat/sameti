@@ -1,20 +1,32 @@
 import React from 'react';
-import {Text, TextProps} from 'react-native';
-import {useAppTextStyle} from './AppTextStyle';
+import { FONTS } from '../../styles';
+import { Text, TextProps } from 'react-native';
+import { useAppTextStyle } from './AppTextStyle';
 
 interface props extends TextProps {
   size?: number;
   color?: string;
+  fontFamily?: keyof typeof FONTS;
 }
 
-const AppText = ({children, style, size, color, ...props}: props) => {
+const AppText = ({
+  children,
+  style,
+  size,
+  color,
+  fontFamily = 'regular',
+  ...props
+}: props) => {
+  const family = FONTS[fontFamily];
   const styles = useAppTextStyle({
-    style: {},
+    style: {
+      fontFamily: family,
+    },
     size,
     color,
   });
   return (
-    <Text style={[styles.container, style]} {...props}>
+    <Text allowFontScaling={false} style={[styles.container, style]} {...props}>
       {children}
     </Text>
   );

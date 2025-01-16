@@ -111,7 +111,7 @@ export const SHADOW = {
   },
   shadow10: {
     shadowColor: '#C3C3C3',
-    shadowOffset: {width: 0, height: 0},
+    shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
@@ -137,7 +137,7 @@ export const SHADOW = {
     elevation: 5,
   },
   containerShadow: {
-    shadowOffset: {width: 2, height: 1},
+    shadowOffset: { width: 2, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 6,
     elevation: 5,

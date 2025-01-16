@@ -13,14 +13,14 @@ export const useGlobalStyle = () => {
       },
       headerGlobalStyle: {
         headerStyle: {
-          backgroundColor: colors.whiteToDark,
+          backgroundColor: colors.white,
           height: 56 + inset.top,
           ...SHADOW.shadow2,
         },
         headerTitleAlign: 'left',
-        headerTintColor: colors.primaryToWhite,
+        headerTintColor: colors.white,
         headerTitleStyle: {
-          fontFamily: FONTS.primary.semiBold,
+          fontFamily: FONTS.semiBold,
           fontSize: 18,
         },
         headerBackTitleVisible: false,
@@ -37,7 +37,7 @@ export const useGlobalStyle = () => {
         alignItems: 'center',
       },
     };
-  }, [colors]);
+  }, [colors, inset]);
 
   return styles;
 };
