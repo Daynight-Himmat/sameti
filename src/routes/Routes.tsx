@@ -12,6 +12,9 @@ import { RootStackParamList } from '../constants/routeConstant';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ForgotPassword from '../views/forgot/Forgot';
+import ChangePassword from '../views/changePassword/ChangePassword';
+import Home from '../views/home/Home';
+import CreateSameti from '../views/createSameti/CreateSameti';
 
 const Auth = createNativeStackNavigator<RootStackParamList>();
 
@@ -41,6 +44,21 @@ const AuthStack = () => {
         name={'signUp'}
         component={SignUp}
         options={{headerShown: false}}
+      />
+       <Auth.Screen
+        name={'changePassword'}
+        component={ChangePassword}
+        options={{headerShown: false}}
+      />
+      <Auth.Screen
+        name={'dashboard'}
+        component={Home}
+        options={{headerShown: false}}
+      />
+      <Auth.Screen
+        name={'createSameti'}
+        component={CreateSameti}
+        options={{headerShown: true, headerTitle: 'Create Sameti'}}
       />
     </Auth.Navigator>
   );

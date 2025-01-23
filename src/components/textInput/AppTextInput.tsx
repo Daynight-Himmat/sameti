@@ -13,6 +13,7 @@ import SvgButton from '../svgButton/SvgButton';
 import React, { useCallback, useState } from 'react';
 import { useAppTextInputStyle } from './AppTextInputStyle';
 import { TEXTINPUT_ICON_SIZE } from '../../constants/constants';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 
 export interface AppTextProps extends TextInputProps {
   label?: string;
@@ -151,7 +152,7 @@ const AppTextInput = ({
             : null}
           {icon && type !== 'password' ? renderIcon(icon, onIconPress) : null}
         </View>
-        {error && <AppText style={styles.error}>{error}</AppText>}
+        <ErrorMessage error={error} />
       </View>
     </>
   );

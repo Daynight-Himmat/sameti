@@ -6,7 +6,7 @@ import AppButton from '../../components/button/AppButton';
 import WelcomeLabel from '../../components/welcomLabel/WelComelabel';
 import { FORGOT_PASSWORD, PLACEHOLDER } from '../../constants/stringConstants';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import AppTextControlInput from '../../components/textInput/AppTextInputController';
+import AppTextControlInput from '../../controller/TextInputController/TextInputController';
 
 const ForgotPassword = () => {
   const { styles } = useForgotStyle();
@@ -26,9 +26,10 @@ const ForgotPassword = () => {
           <AppTextControlInput
             control={control}
             leftIcon={'phoneIcon'}
-            controllerName={'phone'}
+            label={'Mobile Number'}
+            controllerName={'mobile'}
             keyboardType={'number-pad'}
-            placeholder={PLACEHOLDER.email}
+            placeholder={PLACEHOLDER.phone}
           />
           <AppButton
             title="Submit"

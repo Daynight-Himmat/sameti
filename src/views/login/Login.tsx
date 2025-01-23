@@ -8,8 +8,8 @@ import { Pressable, View, SafeAreaView } from 'react-native';
 import WelcomeLabel from '../../components/welcomLabel/WelComelabel';
 import { LOG_IN, PLACEHOLDER } from '../../constants/stringConstants';
 import AuthTextButton from '../../components/authTextButton/AuthTextButton';
-import AppTextControlInput from '../../components/textInput/AppTextInputController';
 import KeyboardScrollView from '../../components/keyboardScrollView/KeyboardScrollView';
+import AppTextControlInput from '../../controller/TextInputController/TextInputController';
 
 const Login = () => {
   const { styles } = useLoginStyle();
@@ -19,13 +19,13 @@ const Login = () => {
     onLogInPress,
     onForgotPress,
     onSignUpPress,
-    handleSubmit,
   } = useLogin();
 
   const renderInput = useCallback(
-    (icon: keyof typeof Svg, controllerName: string, placeholder: string) => {
+    (icon: keyof typeof Svg, controllerName: string, placeholder: string, label: string) => {
       return (
         <AppTextControlInput
+          label={label}
           leftIcon={icon}
           control={control}
           placeholder={placeholder}
@@ -46,15 +46,15 @@ const Login = () => {
         <KeyboardScrollView containerStyle={styles.subContainer}>
           <WelcomeLabel
             isAppLogo
-            isBackPress={true}
+            isBackPress={false}
             label={LOG_IN.label}
             onPress={onBackPress}
             message={LOG_IN.message}
             labelStyle={styles.label}
           />
 
-          {renderInput('emailIcon', 'email', PLACEHOLDER.email)}
-          {renderInput('lockIcon', 'password', PLACEHOLDER.password)}
+          {renderInput('phoneIcon', 'mobile', PLACEHOLDER.phone, 'Mobile No.')}
+          {renderInput('lockIcon', 'password', PLACEHOLDER.password, 'Password')}
 
           <Pressable
             hitSlop={10}
@@ -66,7 +66,7 @@ const Login = () => {
           </Pressable>
           <AppButton
             title="Login"
-            onPress={handleSubmit(onLogInPress)}
+            onPress={onLogInPress}
             style={styles.button}
           />
           <AuthTextButton

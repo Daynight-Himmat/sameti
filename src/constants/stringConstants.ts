@@ -28,7 +28,7 @@ const EMPTY: string = 'No data found';
 
 const FORGOT_PASSWORD = {
   label: 'Forgot Password?',
-  message: 'Enter Email to for reset password',
+  message: 'Enter Phone number to for reset password',
 };
 
 const EMAIL_CONFIRMATION = {
@@ -67,7 +67,7 @@ const PLACEHOLDER = {
   authority: 'Please select',
   lastName: 'Enter last Name',
   fullName: 'Enter full Name',
-  phone: 'Enter phone number',
+  phone: 'Enter Mobile number',
   cancelOrder: 'Write here...',
   postalCode: 'Enter postcode',
   email: 'Enter email address',

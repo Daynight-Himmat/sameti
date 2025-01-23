@@ -7,8 +7,8 @@ import AppButton from '../../components/button/AppButton';
 import WelcomeLabel from '../../components/welcomLabel/WelComelabel';
 import { PLACEHOLDER, SIGN_UP } from '../../constants/stringConstants';
 import AuthTextButton from '../../components/authTextButton/AuthTextButton';
-import AppTextControlInput from '../../components/textInput/AppTextInputController';
 import KeyboardScrollView from '../../components/keyboardScrollView/KeyboardScrollView';
+import AppTextControlInput from '../../controller/TextInputController/TextInputController';
 
 const SignUp = () => {
   const { styles } = useSignUpStyle();
@@ -21,10 +21,11 @@ const SignUp = () => {
   } = useSignUp();
 
   const renderInput = useCallback(
-    (icon: keyof typeof Svg, controllerName: string, placeholder: string) => {
+    (icon: keyof typeof Svg, controllerName: string, placeholder: string, label: string) => {
       return (
         <AppTextControlInput
           leftIcon={icon}
+          label={label}
           control={control}
           placeholder={placeholder}
           controllerName={controllerName}
@@ -50,9 +51,9 @@ const SignUp = () => {
             message={SIGN_UP.message}
             labelStyle={styles.label}
           />
-          {renderInput('personIcon', 'name', PLACEHOLDER.name)}
-          {renderInput('phoneIcon', 'mobile', PLACEHOLDER.email)}
-          {renderInput('lockIcon', 'password', PLACEHOLDER.password)}
+          {renderInput('personIcon', 'name', PLACEHOLDER.name, 'Name')}
+          {renderInput('phoneIcon', 'mobile', PLACEHOLDER.phone, 'Mobile No.')}
+          {renderInput('lockIcon', 'password', PLACEHOLDER.password, 'Password')}
 
           <AppButton
             title="SignUp"

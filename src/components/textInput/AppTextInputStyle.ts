@@ -29,7 +29,7 @@ export const useAppTextInputStyle = ({
         backgroundColor: DEFAULT_COLORS.white,
       },
       margin: {
-        marginBottom: hp(SPACING.s10),
+        marginBottom: hp(SPACING.s4),
       },
       inputContainer: {
         flexDirection: 'row',
@@ -39,15 +39,9 @@ export const useAppTextInputStyle = ({
         position: 'absolute',
         right: wp(SPACING.s20),
       },
-      error: {
-        textAlign: 'left',
-        paddingTop: hp(SPACING.s4),
-        alignSelf: 'flex-start',
-        color: colors.toastError,
-      },
       label: {
         color: colors.primary,
-        marginBottom: hp(SPACING.s12),
+        marginBottom: hp(SPACING.s3),
         alignSelf: 'flex-start',
         marginTop: hp(SPACING.s10),
       },

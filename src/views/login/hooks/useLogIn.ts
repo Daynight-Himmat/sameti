@@ -21,7 +21,7 @@ import {
     const onForgotPress = () => navigation.navigate('forgot');
     const onSignUpPress = () =>
       navigation.navigate('signUp', { comeFrom: 'login' });
-    const onLogInPress = () => navigation.navigate('forgot');
+    const onLogInPress = () => navigation.navigate('createSameti');
 
     const onBackPress = () => {
       if (params?.comeFrom === 'profile') {

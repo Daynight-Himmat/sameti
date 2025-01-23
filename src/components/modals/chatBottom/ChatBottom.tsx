@@ -7,7 +7,7 @@ import { MODALS } from '../../../constants/routeConstant';
 import FooterButton from '../../footerButton/FooterButton';
 import { PLACEHOLDER } from '../../../constants/stringConstants';
 import AppDropdownController from '../../dropdown/DropdownController';
-import AppTextControlInput from '../../textInput/AppTextInputController';
+import AppTextControlInput from '../../../controller/TextInputController.ts/AppTextInputController';
 import { ModalfyParams, UsableModalComponentProp } from 'react-native-modalfy';
 
 interface Props {

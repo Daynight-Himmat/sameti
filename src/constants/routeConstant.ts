@@ -56,6 +56,7 @@ export type RootStackParamList = {
   login: {
     comeFrom?: keyof RootStackParamList;
   };
+  createSameti: undefined,
   brand: {
     storeId: number;
     getMarchantProduct: ({
@@ -141,7 +142,7 @@ export type RootStackParamList = {
     storeId: number;
   };
   availableStore: { data?: ProfileProps };
-  changePassword: { data?: ProfileProps };
+  changePassword: { data?: ProfileProps, comeFrom: keyof RootStackParamList };
   addUser: { id?: number };
   orderReturnList: { data?: ProfileProps; orderData?: OrderList };
   cancelOrderList: {

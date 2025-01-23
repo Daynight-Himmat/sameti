@@ -6,7 +6,7 @@ import {
     NavigationProp,
   } from '@react-navigation/native';
   import { Controller, useForm } from 'react-hook-form';
-  import { loginFormSchema } from '../../../helpers/yupHelper';
+  import { signUpSchema } from '../../../helpers/yupHelper';
   import { RootStackParamList } from '../../../constants/routeConstant';
 
   const useSignUp = () => {
@@ -14,13 +14,13 @@ import {
     const navigation =
       useNavigation<NavigationProp<RootStackParamList, 'login'>>();
     const { handleSubmit, control } = useForm<any, any>({
-      resolver: loginFormSchema,
+      resolver: signUpSchema,
       mode: 'onBlur',
     });
 
     const onForgotPress = () => navigation.navigate('forgot');
     const onSignUpPress = () =>
-      navigation.navigate('signUp', { comeFrom: 'login' });
+      navigation.navigate('login', { comeFrom: 'signUp'  });
     const onLogInPress = () => navigation.navigate('forgot');
 
     const onBackPress = () => {

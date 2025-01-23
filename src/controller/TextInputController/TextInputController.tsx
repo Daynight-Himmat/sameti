@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAppTextInputStyle } from './AppTextInputStyle';
-import AppTextInput, { AppTextProps } from './AppTextInput';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { useTextInputControllerStyle } from './TextInputControllerStyle';
 import { Controller, Control, FieldValues } from 'react-hook-form';
+import AppTextInput, { AppTextProps } from '../../components/textInput/AppTextInput';
 
 interface Props extends AppTextProps {
   type?: any;
@@ -22,7 +22,7 @@ const AppTextControlInput = React.memo(
     containerStyle,
     ...rest
   }: Props) => {
-    const { styles } = useAppTextInputStyle({});
+    const { styles } = useTextInputControllerStyle();
 
     return (
       <Controller

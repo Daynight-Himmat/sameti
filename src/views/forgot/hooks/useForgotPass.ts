@@ -12,7 +12,7 @@ const useForgotPass = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, 'forgot'>>();
 
-  const onForgotPress = () => navigation.goBack();
+  const onForgotPress = () => navigation.navigate('changePassword', {comeFrom: 'changePassword'});
 
   return {
     control,
