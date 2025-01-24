@@ -6,6 +6,7 @@ import { PLACEHOLDER } from '../../constants/stringConstants';
 import KeyboardScrollView from '../../components/keyboardScrollView/KeyboardScrollView';
 import AppTextControlInput from '../../controller/TextInputController/TextInputController';
 import CheckBoxController from '../../controller/CheckBoxController/CheckBoxController';
+import CheckBox from '../../components/checkBox/CheckBox';
 
 const CreateSameti = () => {
   const { control } = useCreateSameti();
@@ -31,7 +32,7 @@ const CreateSameti = () => {
       <View style={styles.mainContainer}>
         <KeyboardScrollView containerStyle={styles.subContainer}>
           {renderInput('name',PLACEHOLDER.name, 'Enter sameti name')}
-          <CheckBoxController control={control} controllerName={'fixed'} type={'check'} isSelected={false} />
+          <CheckBoxController controllerName={'chekc'} control={control} label={''} />
         </KeyboardScrollView>
       </View>
     </SafeAreaView>

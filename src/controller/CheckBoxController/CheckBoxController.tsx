@@ -1,23 +1,24 @@
 import React from 'react';
-import { ListProps } from '../../interfaces/listInterface';
-import ListItem from '../../components/listComponents/ListItem';
+import CheckBox from '../../components/checkBox/CheckBox';
 import {Controller, Control, FieldValues} from 'react-hook-form';
 import ErrorMessage from '../../components/errorMessage/ErrorMessage';
 
-interface Props extends ListProps {
+interface Props {
+  label: string;
   controllerName: string;
   control: Control<FieldValues> | undefined;
 }
 
 const CheckBoxController = React.memo(
-  ({control, controllerName, ...rest }: Props) => {
+  ({control, label, controllerName }: Props) => {
+
     return (
       <Controller
         control={control}
         name={controllerName}
         render={({fieldState: {error}, field}) => (
           <>
-            <ListItem {...field} {...rest} />
+          <CheckBox {...field} labelField={label}/>
             <ErrorMessage error={error?.message} />
           </>
         )}

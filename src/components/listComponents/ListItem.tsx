@@ -5,7 +5,7 @@ import React, { useCallback } from 'react';
 import SvgButton from '../svgButton/SvgButton';
 import { useListItemStyle } from './ListItemStyle';
 import { View, Pressable, ColorValue } from 'react-native';
-import { interfaceType, ListProps } from '../../interfaces/listTypes/listType';
+import { ListProps } from '../../interfaces/listInterface';
 
 const ListItem = React.memo(
   ({
@@ -42,7 +42,7 @@ const ListItem = React.memo(
 
     const onContainerPress = useCallback(() => {
       if (item && valueField) {
-        const valueType = (item as Record<interfaceType, any>)[valueField];
+        const valueType = (item)[valueField];
         return setSelectedId?.(valueType);
       }
       if (onTextPress) {
@@ -75,7 +75,7 @@ const ListItem = React.memo(
               'editIcon',
               () =>
                 valueField &&
-                onEditPress?.((item as Record<interfaceType, any>)[valueField]),
+                onEditPress?.((item)[valueField]),
             )}
           {onDeletePress &&
             renderIcon(
@@ -83,7 +83,7 @@ const ListItem = React.memo(
               () =>
                 valueField &&
                 onDeletePress?.(
-                  (item as Record<interfaceType, any>)[valueField],
+                  (item)[valueField],
                 ),
               colors?.red,
             )}
@@ -166,7 +166,7 @@ const ListItem = React.memo(
               style={[styles.itemText, itemTextStyle]}
               numberOfLines={lebalsLine || 1}>
               {`${
-                labelField && (item as Record<interfaceType, any>)[labelField]
+                labelField && (item)[labelField]
               }`}
             </AppText>
           )}
