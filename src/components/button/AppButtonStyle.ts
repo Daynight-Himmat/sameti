@@ -36,7 +36,6 @@ export const useAppButtonStyle = ({ backgroundColor, borderRadius }: props) => {
       },
       buttonContainer: {
         paddingVertical: hp(SPACING.s16),
-        marginHorizontal: wp(SPACING.s16),
       },
       buttonText: {
         fontFamily: FONTS.medium,

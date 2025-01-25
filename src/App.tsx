@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import {StyleSheet} from 'react-native';
 import {AppContext, AppProvider} from './context/AppContext';
 import store from './redux/store';
@@ -21,7 +21,9 @@ const App = () => {
               globalProps.props = func;
               return (
                 <>
-                  <Routes />
+                  <StrictMode>
+                    <Routes />
+                  </StrictMode>
                 </>
               );
             }}

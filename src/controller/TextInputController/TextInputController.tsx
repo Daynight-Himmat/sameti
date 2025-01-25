@@ -5,7 +5,6 @@ import { Controller, Control, FieldValues } from 'react-hook-form';
 import AppTextInput, { AppTextProps } from '../../components/textInput/AppTextInput';
 
 interface Props extends AppTextProps {
-  type?: any;
   textStyle?: TextStyle;
   controllerName: string;
   containerStyle?: ViewStyle;

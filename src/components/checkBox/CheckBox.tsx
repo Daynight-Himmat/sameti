@@ -1,21 +1,23 @@
-import Svg from '../../assets/svg';
 import AppText from '../text/AppText';
 import Divider from '../divider/Divider';
 import React, { useCallback } from 'react';
+import SvgButton from '../svgButton/SvgButton';
 import { useCheckBoxStyle } from './CheckBoxStyle';
 import { View, Pressable, ColorValue, ViewStyle, StyleProp, TextStyle } from 'react-native';
+import { CheckBoxSide } from '../../interfaces/commonInterface';
 
 interface Props {
   size?: number;
-  labelField: string;
   value: boolean;
+  labelField: string;
   lebalsLine?: number;
   isSeprator?: boolean;
   checkColor?: ColorValue;
+  checkBoxSide: CheckBoxSide;
   style?: StyleProp<ViewStyle>;
   checkStyle?: StyleProp<ViewStyle>;
+  onChange: (...event: any[]) => void;
   itemTextStyle?: StyleProp<TextStyle>;
-  onChange: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CheckBox = React.memo(
@@ -23,62 +25,72 @@ const CheckBox = React.memo(
     size,
     style,
     value,
+    onChange,
     lebalsLine,
     checkStyle,
     checkColor,
     itemTextStyle,
     labelField = '',
-    onChange,
+    checkBoxSide = 'Right',
     isSeprator = false,
   }: Props) => {
     const { styles, colors } = useCheckBoxStyle({
       size: size,
       isSelect: value,
+      checkBoxSide: checkBoxSide,
     });
-    const width = size ? size / 1.5 : 10;
-    const height = size ? size / 1.5 : 10;
 
     const onContainerPress = useCallback(() => {
-        onChange(pre => (pre = !pre));
+        const v = value = !value;
+        onChange(v);
     }, [onChange]);
 
     const renderCheck = useCallback(
       () => (
-        <View style={[styles.checkContainer, checkStyle]}>
+        <Pressable onPress={onContainerPress} style={[styles.checkContainer, checkStyle]}>
           {value && (
-            <Svg.checkIcon
-              width={width}
-              height={height}
-              fill={checkColor ? checkColor : colors.white}
+            <SvgButton
+              icon={'checkIcon'}
+              onPress={onContainerPress}
+              size={size ? size / 1.5 : 10}
+              iconColor={checkColor ? checkColor : colors.white}
             />
           )}
-        </View>
+        </Pressable>
       ),
-      [width, height, colors, styles, checkColor, checkStyle, value],
+      [onContainerPress, styles, checkStyle, value, size, checkColor, colors],
     );
 
     const renderText = useCallback(
       () => (
         <AppText
-                onPress={onContainerPress}
-              style={[styles.itemText, itemTextStyle]}
-              numberOfLines={lebalsLine || 1}>
-              {`${
-                labelField
-              }`}
-            </AppText>
+          onPress={onContainerPress}
+          fontFamily={'medium'}
+          style={[styles.itemText, itemTextStyle]}
+          numberOfLines={lebalsLine || 1}>
+          {labelField}
+        </AppText>
       ),
       [onContainerPress, styles, itemTextStyle, lebalsLine, labelField],
     );
 
     return (
       <>
-        <Pressable style={[styles.list, style]} onPress={onContainerPress}>
+        <View style={[styles.list, style]}>
           <View style={styles.itemContainer}>
-            {renderCheck()}
-            {renderText()}
+            {checkBoxSide === 'Left' ?  (
+              <>
+                {renderCheck()}
+                {renderText()}
+              </>
+            ) : (
+              <>
+                {renderText()}
+                {renderCheck()}
+              </>
+            )}
           </View>
-        </Pressable>
+        </View>
         {isSeprator && <Divider />}
       </>
     );

@@ -16,7 +16,6 @@ export const useCreateSametiStyle = () => {
         flex: 1,
       },
       subContainer: {
-        flex: 1,
         paddingHorizontal: wp(SPACING.s16),
       },
       button: {

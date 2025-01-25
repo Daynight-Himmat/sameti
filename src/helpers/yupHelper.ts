@@ -79,7 +79,46 @@ export const resetPasswordFormSchema = yupResolver(
 export const createSametiSchema = yupResolver(
   yup
     .object({
-      name: yup.string().required(''),
+      sametiName: yup.string().required(REQUIRED.sametiName),
+      isFixDuration: yup.boolean().default(false),
+      fixedDuration: yup.string().when('isFixDuration', {
+          is: true,
+          then: (schema: { required: (arg0: string) => any }) =>
+            schema.required(REQUIRED.fixedDuration),
+        }),
+      isFixDate: yup.boolean().default(false),
+      fixedDate: yup.string().when('isFixDate', {
+          is: true,
+          then: (schema: { required: (arg0: string) => any }) =>
+            schema.required(REQUIRED.fixedDate),
+        }),
+      interestType: yup.string().required(REQUIRED.interestType),
+      interestRate: yup.string().required(REQUIRED.interestRate),
+      shareType: yup.string().required(REQUIRED.shareType),
+      shareAmount: yup.string().required(REQUIRED.shareAmount),
+      isSharePenalty: yup.boolean().default(false),
+      sharePenaltyType: yup.string().required(REQUIRED.sharePenaltyType),
+      sharePenalty: yup.string().when('isSharePenalty', {
+          is: true,
+          then: (schema: { required: (arg0: string) => any }) =>
+            schema.required(REQUIRED.sharePenalty),
+        }),
+      isInterestPenalty: yup.boolean().default(false),
+      interestPenaltyType: yup.string().required(REQUIRED.interestPenaltyType),
+      interestPenalty: yup.string().when('isInterestPenalty', {
+          is: true,
+          then: (schema: { required: (arg0: string) => any }) =>
+            schema.required(REQUIRED.interestPenalty),
+        }),
+      isLoanPenalty: yup.boolean().default(false),
+      loanPenaltyType: yup.string().required(REQUIRED.loanPenaltyType),
+      loanPenalty: yup.string().when('isLoanPenalty', {
+          is: true,
+          then: (schema: { required: (arg0: string) => any }) =>
+            schema.required(REQUIRED.loanPenalty),
+        }),
+      isCaseStructure: yup.boolean().default(false),
+      isOnlinePayment: yup.boolean().default(false),
     })
     .required(),
 );

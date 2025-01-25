@@ -2,16 +2,18 @@ import { useMemo } from 'react';
 import { SPACING } from '../../styles';
 import { StyleSheet } from 'react-native';
 import { useResponsiveScreen, useTheme } from '../../hooks';
+import { CheckBoxSide } from '../../interfaces/commonInterface';
 
 interface props {
   size?: number;
   isSelect?: boolean;
+  checkBoxSide: CheckBoxSide;
   type?: 'check' | 'radio' | 'address' | 'none' | undefined;
 }
 
-export const useCheckBoxStyle = ({ size, isSelect }: props) => {
+export const useCheckBoxStyle = ({ size, isSelect, checkBoxSide }: props) => {
   const { colors } = useTheme();
-  const { hp, wp } = useResponsiveScreen();
+  const { hp } = useResponsiveScreen();
   const styles = useMemo(() => {
     return StyleSheet.create({
       list: {
@@ -20,23 +22,18 @@ export const useCheckBoxStyle = ({ size, isSelect }: props) => {
         flexDirection: 'row',
         marginTop: hp(SPACING.s8),
         paddingBottom: hp(SPACING.s6),
-        backgroundColor: colors.white,
-        justifyContent: 'space-between',
         borderBottomColor: colors.grayishBlue,
       },
       itemContainer: {
-        flexShrink: 1,
+        width: checkBoxSide === 'Left' ? 'auto' : '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: wp(SPACING.s6),
+        justifyContent: 'space-between',
       },
       itemText: {
-        width: '95%',
-        fontSize: 18,
-        fontWeight: '500',
         color: colors.gray,
-        paddingRight: wp(SPACING.s20),
-        paddingHorizontal: wp(SPACING.s10),
+        paddingLeft: ( checkBoxSide === 'Left' ? SPACING.s10 : SPACING.none),
+        paddingRight: ( checkBoxSide === 'Right' ? SPACING.s10 : SPACING.none),
       },
       titleContainer: {
         width: '100%',
@@ -52,7 +49,7 @@ export const useCheckBoxStyle = ({ size, isSelect }: props) => {
         backgroundColor: isSelect ? colors.green : colors.white,
       },
     });
-  }, [colors, hp, isSelect, size, wp]);
+  }, [checkBoxSide, colors, hp, isSelect, size]);
 
   return { styles, colors };
 };

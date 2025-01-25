@@ -16,9 +16,9 @@ const CheckBoxController = React.memo(
       <Controller
         control={control}
         name={controllerName}
-        render={({fieldState: {error}, field}) => (
+        render={({fieldState: {error}, field: {onChange, value}}) => (
           <>
-          <CheckBox {...field} labelField={label}/>
+            <CheckBox value={value} onChange={onChange} labelField={label} checkBoxSide={'Right'} />
             <ErrorMessage error={error?.message} />
           </>
         )}
