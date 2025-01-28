@@ -1,22 +1,29 @@
 import {
+  useRoute,
+  RouteProp,
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
+import Svg from '../assets/svg';
+import { FONTS } from '../styles';
 import {useTheme} from '../hooks';
 import React, {useMemo} from 'react';
+import Home from '../views/home/Home';
 import Login from '../views/login/Login';
 import SignUp from '../views/signUp/SignUp';
 import Splash from '../views/splash/Splash';
 import {Platform, StatusBar} from 'react-native';
+import ForgotPassword from '../views/forgot/Forgot';
+import CreateSameti from '../views/createSameti/CreateSameti';
 import { RootStackParamList } from '../constants/routeConstant';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import ForgotPassword from '../views/forgot/Forgot';
 import ChangePassword from '../views/changePassword/ChangePassword';
-import Home from '../views/home/Home';
-import CreateSameti from '../views/createSameti/CreateSameti';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Profile from '../views/profile/Profile';
 
 const Auth = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 
 const globalProps: any = global;
 
@@ -52,7 +59,7 @@ const AuthStack = () => {
       />
       <Auth.Screen
         name={'dashboard'}
-        component={Home}
+        component={BottomTab}
         options={{headerShown: false}}
       />
       <Auth.Screen
@@ -63,6 +70,75 @@ const AuthStack = () => {
     </Auth.Navigator>
   );
 };
+
+const getIcon = (routeName: keyof RootStackParamList) => {
+  switch (routeName) {
+    case 'home':
+      return Svg.homeIcon;
+    case 'search':
+      return Svg.searchIcon;
+    case 'chatList':
+      return Svg.chatIcon;
+    case 'cart':
+      return Svg.cartIcon;
+    case 'profile':
+      return Svg.personIcon;
+  }
+};
+
+const BottomTab = () => {
+  const { params } = useRoute<RouteProp<RootStackParamList, 'dashboard'>>();
+  const getTabBarIcon = (
+    routeName: keyof RootStackParamList,
+    focused: boolean,
+    color: string,
+  ) => {
+    const SvgImage: any = getIcon(routeName);
+    return <SvgImage fill={color} />;
+  };
+  const { colors } = useTheme();
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: true,
+        tabBarActiveTintColor: colors.green,
+        tabBarInactiveTintColor: colors.gray,
+        headerLeftLabelVisible: false,
+        headerTitleStyle: {
+          fontFamily: FONTS.medium,
+        },
+        headerTitleAlign: 'center',
+        tabBarStyle: {
+          backgroundColor: colors.white,
+        },
+        tabBarShowLabel: false,
+        tabBarIcon: ({ focused, color }) =>
+          getTabBarIcon(route.name, focused, color),
+        tabBarLabelStyle: {
+          fontFamily: FONTS.medium,
+        },
+      })}>
+      <Tab.Screen
+        name={'home'}
+        component={Home}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name={'profile'}
+        component={Profile}
+        initialParams={{
+          params: {
+            comeFrom: params?.comeFrom as keyof RootStackParamList,
+          },
+        }}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
 
 const Routes = () => {
   const navigationRef = useNavigationContainerRef();

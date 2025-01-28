@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { useResponsiveScreen, useTheme } from '../../hooks';
 import { SPACING } from '../../styles';
 
-export const useHomeStyle = () => {
+export const useProfile = () => {
   const { colors } = useTheme();
   const { hp, wp } = useResponsiveScreen();
   const styles = useMemo(() => {
