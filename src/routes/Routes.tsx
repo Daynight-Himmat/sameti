@@ -3,16 +3,18 @@ import {
   RouteProp,
   NavigationContainer,
   useNavigationContainerRef,
+  NavigationProp,
+  useNavigation,
 } from '@react-navigation/native';
 import Svg from '../assets/svg';
 import { FONTS } from '../styles';
 import {useTheme} from '../hooks';
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import Home from '../views/home/Home';
 import Login from '../views/login/Login';
 import SignUp from '../views/signUp/SignUp';
 import Splash from '../views/splash/Splash';
-import {Platform, StatusBar} from 'react-native';
+import {Platform, StatusBar, StyleSheet} from 'react-native';
 import ForgotPassword from '../views/forgot/Forgot';
 import CreateSameti from '../views/createSameti/CreateSameti';
 import { RootStackParamList } from '../constants/routeConstant';
@@ -21,6 +23,7 @@ import ChangePassword from '../views/changePassword/ChangePassword';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Profile from '../views/profile/Profile';
+import SvgButton from '../components/svgButton/SvgButton';
 
 const Auth = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -88,6 +91,7 @@ const getIcon = (routeName: keyof RootStackParamList) => {
 
 const BottomTab = () => {
   const { params } = useRoute<RouteProp<RootStackParamList, 'dashboard'>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList, 'dashboard'>>();
   const getTabBarIcon = (
     routeName: keyof RootStackParamList,
     focused: boolean,
@@ -97,6 +101,11 @@ const BottomTab = () => {
     return <SvgImage fill={color} />;
   };
   const { colors } = useTheme();
+
+  const fabButton = useCallback(() => (
+    <SvgButton isFab onPress={()=> navigation.navigate('createSameti')} iconColor={'white'} icon={'plusIcon'} style={styles.fabButton} />
+  ), [])
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -123,6 +132,14 @@ const BottomTab = () => {
         component={Home}
         options={{ headerShown: false }}
       />
+      <Tab.Screen
+          name={'createSameti'}
+          component={CreateSameti}
+          options={{
+            tabBarButton: () => fabButton(),
+          }}
+        />
+
       <Tab.Screen
         name={'profile'}
         component={Profile}
@@ -162,3 +179,17 @@ const Routes = () => {
 };
 
 export default Routes;
+
+
+const styles = StyleSheet.create({
+  fabButton: {
+      backgroundColor: 'black',
+      borderRadius: 100,
+      position: 'relative',
+      alignItems: 'center',
+      alignSelf: 'center',
+      bottom: 25,
+      zIndex: 999,
+      left: 0,
+    }
+});

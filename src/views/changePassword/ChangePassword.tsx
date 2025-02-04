@@ -37,13 +37,16 @@ const ChangePassword = () => {
           {params?.comeFrom === 'changePassword' && renderItem('currentPassword', 'Current Password', PLACEHOLDER.currentPassword)}
           {renderItem('password', 'New Password', PLACEHOLDER.password)}
           {renderItem('confirmPassword', 'Confirm Password', PLACEHOLDER.confirm)}
-          <AppButton
+          
+        </KeyboardAwareScrollView>
+        <View style={styles.buttonContainer}>
+            <AppButton
               title={params?.comeFrom === 'changePassword' ? 'Update Password' : 'Reset Password'}
               style={styles.buttonStyle}
               labelStyle={styles.buttonText}
               onPress={handleSubmit(() => {})}
             />
-        </KeyboardAwareScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );

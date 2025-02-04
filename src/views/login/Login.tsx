@@ -64,6 +64,8 @@ const Login = () => {
               {LOG_IN.forgotPass}
             </AppText>
           </Pressable>
+        </KeyboardScrollView>
+        <View style={styles.buttonContainer}>
           <AppButton
             title="Login"
             onPress={onLogInPress}
@@ -74,7 +76,7 @@ const Login = () => {
             onPressText={LOG_IN.signUp}
             message={LOG_IN.createAccount}
           />
-        </KeyboardScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );

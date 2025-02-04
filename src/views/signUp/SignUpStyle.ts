@@ -22,9 +22,8 @@ export const useSignUpStyle = () => {
       button: {
         height: 48,
         width: '100%',
-        borderRadius: 6,
         marginTop: hp(SPACING.s22),
-        backgroundColor: colors.green,
+        backgroundColor: colors.darkGray,
       },
       label: {
         fontSize: 24,
@@ -36,6 +35,9 @@ export const useSignUpStyle = () => {
         padding: 5,
         color: colors.darkGray,
       },
+      buttonContainer: {
+        paddingHorizontal: wp(16)
+      }
     });
   }, [colors, hp, wp]);
 

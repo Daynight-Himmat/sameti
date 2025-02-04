@@ -45,7 +45,7 @@ const WelcomeLabel: FunctionComponent<Props> = ({
         />
       )}
       {isAppLogo && (
-        <SvgButton size={120} icon={'appLogo'} style={styles?.logo} />
+        <SvgButton size={120} icon={'appIcon'} style={styles?.logo} />
       )}
       <View style={styles.welcomeContainer}>
         <AppText fontFamily={'semiBold'} style={[styles.label, labelStyle]}>

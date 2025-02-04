@@ -17,7 +17,7 @@ const AuthTextButton = React.memo(
       <Pressable style={styles.signUpContainer} onPress={onPress}>
         <AppText style={styles.signUp}>
           {message}
-          <AppText fontFamily={'medium'} style={styles.signUpText}>
+          <AppText fontFamily={'semiBold'} style={styles.signUpText}>
             {onPressText}
           </AppText>
         </AppText>

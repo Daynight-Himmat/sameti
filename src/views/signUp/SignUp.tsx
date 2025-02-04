@@ -55,7 +55,10 @@ const SignUp = () => {
           {renderInput('phoneIcon', 'mobile', PLACEHOLDER.phone, 'Mobile No.')}
           {renderInput('lockIcon', 'password', PLACEHOLDER.password, 'Password')}
 
-          <AppButton
+         
+        </KeyboardScrollView>
+        <View style={styles.buttonContainer}>
+           <AppButton
             title="SignUp"
             onPress={handleSubmit(onLogInPress)}
             style={styles.button}
@@ -65,7 +68,7 @@ const SignUp = () => {
             onPressText={SIGN_UP.signIn}
             message={SIGN_UP.haveAccount}
           />
-        </KeyboardScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );

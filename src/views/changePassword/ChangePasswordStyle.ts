@@ -39,13 +39,13 @@ export const useChangePasswordStyle = () => {
       },
       buttonContainer: {
         paddingHorizontal: wp(16),
+        marginVertical:hp(16),
       },
       buttonStyle: {
         height: 48,
         width: '100%',
-        borderRadius: 6,
         marginTop: hp(SPACING.s22),
-        backgroundColor: colors.green,
+        backgroundColor: colors.darkGray,
       },
     });
   }, [colors, hp, wp]);

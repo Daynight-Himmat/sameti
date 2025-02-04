@@ -47,7 +47,7 @@ const CheckBox = React.memo(
 
     const renderCheck = useCallback(
       () => (
-        <Pressable onPress={onContainerPress} style={[styles.checkContainer, checkStyle]}>
+        <Pressable onPress={onContainerPress} hitSlop={10} style={[styles.checkContainer, checkStyle]}>
           {value && (
             <SvgButton
               icon={'checkIcon'}

@@ -31,12 +31,14 @@ const ForgotPassword = () => {
             keyboardType={'number-pad'}
             placeholder={PLACEHOLDER.phone}
           />
+        </KeyboardAwareScrollView>
+        <View style={styles.buttonContainer}>
           <AppButton
             title="Submit"
             style={styles.button}
             onPress={handleSubmit(() => onForgotPress())}
           />
-        </KeyboardAwareScrollView>
+        </View>
       </View>
     </SafeAreaView>
   );
