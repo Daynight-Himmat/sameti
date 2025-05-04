@@ -11,7 +11,7 @@ index 6ee16ff..9c4c631 100644
    export function removeOrientationListener(): void;
  }
 diff --git a/node_modules/react-native-responsive-screen/index.js b/node_modules/react-native-responsive-screen/index.js
-index f620420..a8a93ad 100644
+index f620420..d455006 100644
 --- a/node_modules/react-native-responsive-screen/index.js
 +++ b/node_modules/react-native-responsive-screen/index.js
 @@ -1,11 +1,12 @@
@@ -28,13 +28,12 @@ index f620420..a8a93ad 100644
  
  /**
   * Converts provided width percentage to independent pixel (dp).
-@@ -15,11 +16,12 @@ let screenHeight = Dimensions.get('window').height;
+@@ -15,11 +16,11 @@ let screenHeight = Dimensions.get('window').height;
   */
  const widthPercentageToDP = widthPercent => {
    // Parse string percentage input and convert it to number.
 -  const elemWidth = typeof widthPercent === "number" ? widthPercent : parseFloat(widthPercent);
-+  const elemWidth =
-+     typeof widthPercent === 'number' ? widthPercent : parseFloat(widthPercent);
++  const elemWidth = typeof widthPercent === 'number' ? widthPercent : parseFloat(widthPercent);
  
    // Use PixelRatio.roundToNearestPixel method in order to round the layout
    // size (dp) to the nearest one that correspons to an integer number of pixels.
@@ -43,12 +42,12 @@ index f620420..a8a93ad 100644
  };
  
  /**
-@@ -30,11 +32,14 @@ const widthPercentageToDP = widthPercent => {
+@@ -30,11 +31,14 @@ const widthPercentageToDP = widthPercent => {
   */
  const heightPercentageToDP = heightPercent => {
    // Parse string percentage input and convert it to number.
 -  const elemHeight = typeof heightPercent === "number" ? heightPercent : parseFloat(heightPercent);
-+  const elemHeight =
++    const elemHeight =
 +    typeof heightPercent === 'number'
 +      ? heightPercent
 +      : parseFloat(heightPercent);
@@ -60,7 +59,7 @@ index f620420..a8a93ad 100644
  };
  
  /**
-@@ -47,15 +52,19 @@ const heightPercentageToDP = heightPercent => {
+@@ -47,15 +51,19 @@ const heightPercentageToDP = heightPercent => {
   *                      invoke setState method and trigger screen rerender (this.setState()).
   */
  const listenOrientationChange = that => {
@@ -84,7 +83,7 @@ index f620420..a8a93ad 100644
    });
  };
  
-@@ -66,12 +75,14 @@ const listenOrientationChange = that => {
+@@ -66,12 +74,14 @@ const listenOrientationChange = that => {
   * avoid adding new listeners every time the same component is re-mounted.
   */
  const removeOrientationListener = () => {

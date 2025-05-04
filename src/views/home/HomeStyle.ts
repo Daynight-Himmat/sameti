@@ -12,30 +12,40 @@ export const useHomeStyle = () => {
         flex: 1,
         backgroundColor: colors?.backgroundColor,
       },
-      mainContainer: {
-        flex: 1,
-      },
-      subContainer: {
-        flex: 1,
+      mainContainer:{
         paddingHorizontal: wp(SPACING.s16),
       },
-      button: {
-        height: 48,
-        width: '100%',
-        borderRadius: 6,
-        marginTop: hp(SPACING.s22),
-        backgroundColor: colors.green,
+      header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: SPACING.s16,
+        justifyContent: 'space-between',
+        backgroundColor: colors.backgroundColor,
       },
-      label: {
-        fontSize: 24,
-      },
-      forgetPass: {
-        alignSelf: 'flex-end',
-      },
-      forgetPassText: {
-        padding: 5,
+      headerText: {
         color: colors.darkGray,
+        fontSize: 22,        
       },
+      toggleButton: {
+        height: 60,
+        padding: 2,
+        borderRadius: 50,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        backgroundColor: colors.lightBlue,
+      },
+       toggleSwitch: {
+        height: 56,
+        width: '50%',
+        borderRadius: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.darkGray,
+      },
+      toggleText: {
+        fontSize: 18,
+        color: colors.white,
+      }
     });
   }, [colors, hp, wp]);
 
